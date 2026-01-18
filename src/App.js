@@ -16,7 +16,6 @@ const DarkPlanner = () => {
     2: [{ id: 1, time: '14:00', text: 'client meeting' }],
     3: [{ id: 1, time: '10:00', text: 'team sync' }],
     4: [{ id: 1, time: '15:00', text: 'project review' }]
-  
   });
   const [newEventDate, setNewEventDate] = useState(null);
   const [eventText, setEventText] = useState('');
@@ -130,23 +129,22 @@ const DarkPlanner = () => {
   };
 
   const saveEvent = () => {
-  if (eventText.trim() && newEventDate) {
-    const eventKey = `${year}-${month}-${newEventDate}`;
+    if (eventText.trim() && newEventDate) {
+      setEvents({
+        ...events,
+        [newEventDate]: [...(events[newEventDate] || []), { id: Date.now(), text: eventText }]
+      });
+      setEventText('');
+      setNewEventDate(null);
+    }
+  };
+
+  const removeEvent = (date, eventId) => {
     setEvents({
       ...events,
-      [eventKey]: [...(events[eventKey] || []), { id: Date.now(), text: eventText }]
+      [date]: events[date].filter(e => e.id !== eventId)
     });
-    setEventText('');
-    setNewEventDate(null);
-  }
-};
-
- const removeEvent (eventKey, eventId) => {
-  setEvents({
-    ...events,
-    [eventKey]: events[eventKey].filter(e => e.id !== eventId)
-  });
-};
+  };
 
   const toggleTodo = (week, todoId) => {
     setTodos({
@@ -220,19 +218,19 @@ const DarkPlanner = () => {
     for (let i = 0; i < startDay; i++) {
       days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
     }
+    
     for (let i = 1; i <= daysInMonth; i++) {
-  const eventKey = `${year}-${month}-${i}`;
-  const hasEvents = events[eventKey] && events[eventKey].length > 0;
+      const hasEvents = events[i] && events[i].length > 0;
       days.push(
         <div key={i} className="calendar-day">
           <div className="date-number">{i}</div>
           {hasEvents && (
-              <div className="events-container">
-                  {events[eventKey].map(event => (
+            <div className="events-container">
+              {events[i].map(event => (
                 <div key={event.id} className="event-pill">
                   <span>{event.text}</span>
-                   <button onClick={() => removeEvent(eventKey, event.id)} className="remove-event">
-                   <X size={10} />
+                  <button onClick={() => removeEvent(i, event.id)} className="remove-event">
+                    <X size={10} />
                   </button>
                 </div>
               ))}
