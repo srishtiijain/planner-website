@@ -33,6 +33,7 @@ const DarkPlanner = () => {
   // Load data from localStorage on mount
   useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Check for today's reminders
@@ -40,13 +41,15 @@ const DarkPlanner = () => {
     if (!isLoading) {
       checkTodayReminders();
     }
-  }, [isLoading, reminders]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
 
   // Save data whenever it changes
   useEffect(() => {
     if (!isLoading) {
       saveData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [events, todos, reminders, isLoading]);
 
   const loadData = () => {
