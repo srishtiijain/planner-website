@@ -231,8 +231,8 @@ const DarkPlanner = () => {
                   {events[eventKey].map(event => (
                 <div key={event.id} className="event-pill">
                   <span>{event.text}</span>
-                  <button onClick={() => removeEvent(i, event.id)} className="remove-event">
-                    <X size={10} />
+                   <button onClick={() => removeEvent(eventKey, event.id)} className="remove-event">
+                   <X size={10} />
                   </button>
                 </div>
               ))}
