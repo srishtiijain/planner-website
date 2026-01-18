@@ -10,6 +10,7 @@ const DarkPlanner = () => {
     2: [{ id: 1, text: 'plan next sprint', completed: false }],
     3: [{ id: 1, text: 'monthly review', completed: false }],
     4: [{ id: 1, text: 'set new objectives', completed: false }]
+    5: [{ id: 1, text: 'goals', completed: false }]
   });
   const [reminders, setReminders] = useState({
     1: [{ id: 1, time: '09:00', text: 'morning standup' }],
