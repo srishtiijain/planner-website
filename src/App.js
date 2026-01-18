@@ -9,14 +9,14 @@ const DarkPlanner = () => {
     1: [{ id: 1, text: 'review weekly goals', completed: false }],
     2: [{ id: 1, text: 'plan next sprint', completed: false }],
     3: [{ id: 1, text: 'monthly review', completed: false }],
-    4: [{ id: 1, text: 'set new objectives', completed: false }]
+    4: [{ id: 1, text: 'set new objectives', completed: false }],
     5: [{ id: 1, text: 'goals', completed: false }]
   });
   const [reminders, setReminders] = useState({
     1: [{ id: 1, time: '09:00', text: 'morning standup' }],
     2: [{ id: 1, time: '14:00', text: 'client meeting' }],
     3: [{ id: 1, time: '10:00', text: 'team sync' }],
-    4: [{ id: 1, time: '15:00', text: 'project review' }]
+    4: [{ id: 1, time: '15:00', text: 'project review' }],
     5: [{ id: 1, time: '15:00', text: 'project review' }]
   });
   const [newEventDate, setNewEventDate] = useState(null);
