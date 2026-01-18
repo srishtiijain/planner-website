@@ -130,22 +130,23 @@ const DarkPlanner = () => {
   };
 
   const saveEvent = () => {
-    if (eventText.trim() && newEventDate) {
-      setEvents({
-        ...events,
-        [newEventDate]: [...(events[newEventDate] || []), { id: Date.now(), text: eventText }]
-      });
-      setEventText('');
-      setNewEventDate(null);
-    }
-  };
-
-  const removeEvent = (date, eventId) => {
+  if (eventText.trim() && newEventDate) {
+    const eventKey = `${year}-${month}-${newEventDate}`;
     setEvents({
       ...events,
-      [date]: events[date].filter(e => e.id !== eventId)
+      [eventKey]: [...(events[eventKey] || []), { id: Date.now(), text: eventText }]
     });
-  };
+    setEventText('');
+    setNewEventDate(null);
+  }
+};
+
+ const removeEvent (eventKey, eventId) => {
+  setEvents({
+    ...events,
+    [eventKey]: events[eventKey].filter(e => e.id !== eventId)
+  });
+};
 
   const toggleTodo = (week, todoId) => {
     setTodos({
@@ -219,15 +220,15 @@ const DarkPlanner = () => {
     for (let i = 0; i < startDay; i++) {
       days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
     }
-    
     for (let i = 1; i <= daysInMonth; i++) {
-      const hasEvents = events[i] && events[i].length > 0;
+  const eventKey = `${year}-${month}-${i}`;
+  const hasEvents = events[eventKey] && events[eventKey].length > 0;
       days.push(
         <div key={i} className="calendar-day">
           <div className="date-number">{i}</div>
           {hasEvents && (
-            <div className="events-container">
-              {events[i].map(event => (
+              <div className="events-container">
+                  {events[eventKey].map(event => (
                 <div key={event.id} className="event-pill">
                   <span>{event.text}</span>
                   <button onClick={() => removeEvent(i, event.id)} className="remove-event">
