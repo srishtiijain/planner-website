@@ -17,6 +17,7 @@ const DarkPlanner = () => {
     2: [{ id: 1, time: '14:00', text: 'client meeting' }],
     3: [{ id: 1, time: '10:00', text: 'team sync' }],
     4: [{ id: 1, time: '15:00', text: 'project review' }]
+    5: [{ id: 1, time: '15:00', text: 'project review' }]
   });
   const [newEventDate, setNewEventDate] = useState(null);
   const [eventText, setEventText] = useState('');
@@ -290,7 +291,7 @@ const DarkPlanner = () => {
       {view === 'month' ? (
         <div className="main-container">
           <div className="week-selector">
-            {[1, 2, 3, 4].map(week => (
+            {[1, 2, 3, 4, 5].map(week => (
               <button
                 key={week}
                 className="week-button"
