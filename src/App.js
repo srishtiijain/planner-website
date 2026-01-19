@@ -9,13 +9,15 @@ const DarkPlanner = () => {
     1: [{ id: 1, text: 'review weekly goals', completed: false }],
     2: [{ id: 1, text: 'plan next sprint', completed: false }],
     3: [{ id: 1, text: 'monthly review', completed: false }],
-    4: [{ id: 1, text: 'set new objectives', completed: false }]
+    4: [{ id: 1, text: 'set new objectives', completed: false }],
+    5: [{ id: 1, text: 'wrap up month', completed: false }]
   });
   const [reminders, setReminders] = useState({
     1: [{ id: 1, time: '09:00', text: 'morning standup' }],
     2: [{ id: 1, time: '14:00', text: 'client meeting' }],
     3: [{ id: 1, time: '10:00', text: 'team sync' }],
-    4: [{ id: 1, time: '15:00', text: 'project review' }]
+    4: [{ id: 1, time: '15:00', text: 'project review' }],
+    5: [{ id: 1, time: '16:00', text: 'month-end review' }]
   });
   const [newEventDate, setNewEventDate] = useState(null);
   const [eventText, setEventText] = useState('');
@@ -130,19 +132,20 @@ const DarkPlanner = () => {
 
   const saveEvent = () => {
     if (eventText.trim() && newEventDate) {
+      const eventKey = `${year}-${month}-${newEventDate}`;
       setEvents({
         ...events,
-        [newEventDate]: [...(events[newEventDate] || []), { id: Date.now(), text: eventText }]
+        [eventKey]: [...(events[eventKey] || []), { id: Date.now(), text: eventText }]
       });
       setEventText('');
       setNewEventDate(null);
     }
   };
 
-  const removeEvent = (date, eventId) => {
+  const removeEvent = (eventKey, eventId) => {
     setEvents({
       ...events,
-      [date]: events[date].filter(e => e.id !== eventId)
+      [eventKey]: events[eventKey].filter(e => e.id !== eventId)
     });
   };
 
@@ -220,16 +223,17 @@ const DarkPlanner = () => {
     }
     
     for (let i = 1; i <= daysInMonth; i++) {
-      const hasEvents = events[i] && events[i].length > 0;
+      const eventKey = `${year}-${month}-${i}`;
+      const hasEvents = events[eventKey] && events[eventKey].length > 0;
       days.push(
         <div key={i} className="calendar-day">
           <div className="date-number">{i}</div>
           {hasEvents && (
             <div className="events-container">
-              {events[i].map(event => (
+              {events[eventKey].map(event => (
                 <div key={event.id} className="event-pill">
                   <span>{event.text}</span>
-                  <button onClick={() => removeEvent(i, event.id)} className="remove-event">
+                  <button onClick={() => removeEvent(eventKey, event.id)} className="remove-event">
                     <X size={10} />
                   </button>
                 </div>
@@ -289,7 +293,7 @@ const DarkPlanner = () => {
       {view === 'month' ? (
         <div className="main-container">
           <div className="week-selector">
-            {[1, 2, 3, 4].map(week => (
+            {[1, 2, 3, 4, 5].map(week => (
               <button
                 key={week}
                 className="week-button"
